@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+  namespace: myapp
+  labels:
+    app: react
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+        - name: react-app
+          image: kariukiantony/react:1.0.2
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+          env:
+            - name: VITE_ENV
+              value: production
+
+            - name: VITE_BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: myapp-configmap
+                  key: VITE_BACKEND_URL
+
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+  namespace: myapp
+
+spec:
+  type: ClusterIP
+  selector:
+    app: react
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

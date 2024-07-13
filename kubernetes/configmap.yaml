@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-configmap
+  namespace: myapp
+
+data:
+  VITE_BACKEND_URL: http://myapp.example.com/api/users
+  MONGODB_HOST: mongodb-service
+  MONGODB_NAME: Test

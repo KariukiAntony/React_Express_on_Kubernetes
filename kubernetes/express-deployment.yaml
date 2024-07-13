@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-deployment
+  namespace: myapp
+  labels:
+    app: express
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: express
+  template:
+    metadata:
+      labels:
+        app: express
+    spec:
+      containers:
+        - name: express-app
+          image: kariukiantony/express:latest
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+          env:
+            - name: NODE_ENV
+              value: production
+
+            - name: PORT
+              value: "3000"
+
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-secret
+                  key: mongodb_root_username
+
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-secret
+                  key: mongodb_root_password
+
+            - name: MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: myapp-configmap
+                  key: MONGODB_HOST
+
+            - name: MONGODB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: myapp-configmap
+                  key: MONGODB_NAME
+
+            - name: MONGODB_URL
+              value: mongodb://$(MONGODB_USER):$(MONGODB_PASSWORD)@$(MONGODB_HOST):27017
+
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: express-service # This is the name that ingress will use.
+  namespace: myapp
+
+spec:
+  type: ClusterIP
+  selector:
+    app: express
+  ports:
+    - protocol: TCP 
+      port: 3000
+      targetPort: 3000
