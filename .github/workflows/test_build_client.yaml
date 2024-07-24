@@ -1,0 +1,74 @@
+name: Test and  Build
+run-name: client-test-build
+
+on:
+  workflow_call:
+    inputs:
+      client-input:
+        type: string
+        required: true
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.14.x]
+      fail-fast: false
+
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - name: checkout the repo
+        uses: actions/checkout@v4
+
+      - name: setup nodejs version ${{matrix.node-version}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node-version}}
+
+      - name: install dependecies
+        shell: bash
+        run: |
+          npm install
+
+      - name: run tests
+        shell: bash
+        run: |
+          echo "This is the input passed: ${{inputs.client-input}}"
+
+  Build:
+    needs: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.14.x]
+      fail-fast: false
+
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - name: checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Build using nodejs version ${{matrix.node-version}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node-version}}
+
+      - name: install dependecies
+        shell: bash
+        run: |
+          npm install
+
+      - name: Build the application
+        shell: bash
+        run: |
+          echo "Building your application"
+          npm run build

@@ -21,7 +21,7 @@ Deploy and scale a simple full-stack application on a DigitalOcean Kubernetes cl
 - ArgoCD
 
 ## Getting Started
-1. Clone the repository: `git clone https://github.com/yourusername/ReactExpressK8s.git`
+1. Clone the repository: `git clone https://github.com/KariukiAntony/React_Express_on_Kubernetes.git`
 2. Start the development server
 ```shell
  $ chmod u+x ./local.sh
