@@ -23,9 +23,9 @@ on:
         default: "0.0.1"
 
 env:
-  DOCKER_TAG: 0.0.2
-  SERVER_IMAGE: express
-  CLIENT_IMAGE: react
+  DOCKER_TAG: 0.0.1
+  SERVER_IMAGE: express-k8s
+  CLIENT_IMAGE: react-k8s
 
 jobs:
   Test-Client:
