@@ -24,8 +24,8 @@ on:
 
 env:
   DOCKER_TAG: 0.0.1
-  SERVER_IMAGE: express
-  CLIENT_IMAGE: react
+  SERVER_IMAGE: express-k8s
+  CLIENT_IMAGE: react-k8s
 
 jobs:
   Test-Client:
