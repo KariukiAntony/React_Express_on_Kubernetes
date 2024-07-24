@@ -23,7 +23,7 @@ on:
         default: "0.0.1"
 
 env:
-  DOCKER_TAG: 0.0.2
+  DOCKER_TAG: 0.0.1
   SERVER_IMAGE: express
   CLIENT_IMAGE: react
 
