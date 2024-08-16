@@ -1,0 +1,6 @@
+{
+    "name": "React_Express_on_Kubernetes",
+    "dockerComposeFile": "docker-compose.yaml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+}
